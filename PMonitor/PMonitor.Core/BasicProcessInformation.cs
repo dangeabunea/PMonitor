@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using PMonitor.Core.Linux;
 
 namespace PMonitor.Core
 {
@@ -35,7 +36,7 @@ namespace PMonitor.Core
         }
 
         /// <summary>
-        /// Refresh the information about the associated process.
+        /// Refresh the information about the associated Windows process.
         /// </summary>
         /// <param name="process">The associated process where the information is retrieved from</param>
         public void Refresh(Process process)
@@ -55,6 +56,30 @@ namespace PMonitor.Core
             StartDateTime = process.StartTime;
             MemoryUsageMb = (int) (process.WorkingSet64/1024/1024);
             UptimeInSeconds = (int) (DateTime.Now - process.StartTime).TotalSeconds;
+            State = ProcessState.Running;
+        }
+
+        /// <summary>
+        /// Refresh the information about the associated Linux process.
+        /// </summary>
+        /// <param name="process">The associated process where the information is retrieved from</param>
+        public void Refresh(LinuxProcess process)
+        {
+            //if process can not be found, re-initialize all members of the process information object
+            if (process == null)
+            {
+                Pid = default(int); ;
+                StartDateTime = default(DateTime);
+                MemoryUsageMb = default(int);
+                UptimeInSeconds = default(int);
+                State = ProcessState.NotRunning;
+                return;
+            }
+            //else update the information of this object from the associated process
+            Pid = process.Id;
+            StartDateTime = process.StartTime;
+            MemoryUsageMb = (int)(process.WorkingSet64 / 1024 / 1024);
+            UptimeInSeconds = (int)(DateTime.Now - process.StartTime).TotalSeconds;
             State = ProcessState.Running;
         }
     }

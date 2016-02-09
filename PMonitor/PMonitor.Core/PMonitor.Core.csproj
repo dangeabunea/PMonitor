@@ -42,10 +42,12 @@
   <ItemGroup>
     <Compile Include="AbstractProcessMonitor.cs" />
     <Compile Include="BasicProcessInformation.cs" />
+    <Compile Include="ProcessMonitorFactory.cs" />
     <Compile Include="ProcessState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unix\UnixProcess.cs" />
-    <Compile Include="Unix\UnixProcessStatusFile.cs" />
+    <Compile Include="Linux\LinuxProcess.cs" />
+    <Compile Include="Linux\LinuxProcessMonitor.cs" />
+    <Compile Include="Linux\UnixProcessStatusFile.cs" />
     <Compile Include="Windows\WindowsProcessMonitor.cs" />
   </ItemGroup>
   <ItemGroup />

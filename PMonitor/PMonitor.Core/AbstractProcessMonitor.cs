@@ -11,6 +11,7 @@ namespace PMonitor.Core
     /// </summary>
     public abstract class AbstractProcessMonitor
     {
+        //We make the collection concurrent inc ase refreshes and reads are performed from multiple threads
         protected ConcurrentBag<BasicProcessInformation> BasicProcessList { get; }
 
         public int NbOfProcesses

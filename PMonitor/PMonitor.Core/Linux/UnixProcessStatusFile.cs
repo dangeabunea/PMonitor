@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PMonitor.Core.Unix
+namespace PMonitor.Core.Linux
 {
     /// <summary>
     /// The content of the stat files can be found in /proc/{pid}/stat. The values there are separated

@@ -4,14 +4,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace PMonitor.Core.Unix
+namespace PMonitor.Core.Linux
 {
     /// <summary>
     /// We need a custom class that will encapsulate a Linux porcess. Under Mono, the Process.GetProcessesByName() will
     /// not work in the same way as on Windows. Each applicaiton that you run under Mono, will have the same process name: mono.
     /// So, we need to differentiate between them.
     /// </summary>
-    public class UnixProcess
+    public class LinuxProcess
     {
         private readonly Process _process;
 
@@ -50,7 +50,7 @@ namespace PMonitor.Core.Unix
         }
 
 
-        private UnixProcess(int pid)
+        private LinuxProcess(int pid)
         {
             _process = Process.GetProcessById(pid);
 
@@ -60,7 +60,7 @@ namespace PMonitor.Core.Unix
             }
         }
 
-        private UnixProcess(Process process)
+        private LinuxProcess(Process process)
         {
             _process = process;
         }
@@ -72,10 +72,10 @@ namespace PMonitor.Core.Unix
 
         //Static Methods. We use them in order to replicate how the Process class functions
 
-        public static UnixProcess Start(string fileName)
+        public static LinuxProcess Start(string fileName)
         {
             Process p = Process.Start(fileName);
-            return new UnixProcess(p);
+            return new LinuxProcess(p);
         }
 
         /// <summary>
@@ -87,11 +87,11 @@ namespace PMonitor.Core.Unix
         /// - /proc/PID/stat for process status
         /// </summary>
         /// <returns></returns>
-        public static UnixProcess[] GetProcesses()
+        public static LinuxProcess[] GetProcesses()
         {
             const string PROC_DIR = "/proc";
 
-            IList<UnixProcess> processList = new List<UnixProcess>();
+            IList<LinuxProcess> processList = new List<LinuxProcess>();
 
             foreach (var directory in Directory.GetDirectories(PROC_DIR))
             {
@@ -115,16 +115,16 @@ namespace PMonitor.Core.Unix
                     continue;
                 }
 
-                UnixProcess unixProcess = BuildUnixProcess(processStatusFile);
-                processList.Add(unixProcess);
+                LinuxProcess linuxProcess = BuildUnixProcess(processStatusFile);
+                processList.Add(linuxProcess);
             }
 
             return processList.ToArray();
         }
 
-        private static UnixProcess BuildUnixProcess(UnixProcessStatusFile processStatusFile)
+        private static LinuxProcess BuildUnixProcess(UnixProcessStatusFile processStatusFile)
         {
-            UnixProcess unixProcess = new UnixProcess(processStatusFile.Pid);
+            LinuxProcess linuxProcess = new LinuxProcess(processStatusFile.Pid);
 
             //We verify if the process is a mono app. They are present in the stat file if the (mono) text is there. If
             //this is the case, then we gho deeper and anlyze the cmdline file in order to get the arguments to the mono command.
@@ -134,21 +134,21 @@ namespace PMonitor.Core.Unix
                 var cmdline = ParseUnixProcessCommandLineFile(processStatusFile.Pid);
                 //the first element is the mono command
                 //the second element is the program we executed (.exe)
-                unixProcess.ProcessName = Path.GetFileName(cmdline[1]);
+                linuxProcess.ProcessName = Path.GetFileName(cmdline[1]);
             }
             else
             {
-                unixProcess.ProcessName = processStatusFile.FileName.Trim('(', ')');
+                linuxProcess.ProcessName = processStatusFile.FileName.Trim('(', ')');
             }
-            return unixProcess;
+            return linuxProcess;
         }
 
-        public static UnixProcess[] GetProcessesByName(string processName)
+        public static LinuxProcess[] GetProcessesByName(string processName)
         {
             return GetProcesses().Where(p => p.ProcessName == processName).ToArray();
         }
 
-        public static UnixProcess GetProcessById(int id)
+        public static LinuxProcess GetProcessById(int id)
         {
             return GetProcesses().SingleOrDefault(x => x.Id == id);
         }
