@@ -44,11 +44,11 @@
     <Compile Include="BasicProcessInformation.cs" />
     <Compile Include="ProcessState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Unix\UnixProcess.cs" />
+    <Compile Include="Unix\UnixProcessStatusFile.cs" />
     <Compile Include="Windows\WindowsProcessMonitor.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Unix\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
