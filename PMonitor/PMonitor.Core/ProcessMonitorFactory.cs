@@ -11,7 +11,7 @@ namespace PMonitor.Core
     /// </summary>
     public class ProcessMonitorFactory
     {
-        public AbstractProcessMonitor BuildDefaultOSProcessMonitor()
+        public static AbstractProcessMonitor BuildDefaultOSProcessMonitor()
         {
             //we check the OS platform to decide which instance to return
             string osPlatform = Environment.OSVersion.Platform.ToString();

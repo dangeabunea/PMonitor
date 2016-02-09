@@ -19,12 +19,12 @@ namespace PMonitor.Test
     /// </summary>
 
     [TestFixture]
-    public class WindowsProcessMonitorTest
+    public class ProcessMonitorTests
     {
         private readonly string _process1FilePath;
         private readonly string _process2FilePath;
 
-        public WindowsProcessMonitorTest()
+        public ProcessMonitorTests()
         {
             var resourcesPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Resources";
             _process1FilePath = Path.Combine(resourcesPath, "PMonitor.DemoProcess1.exe");
@@ -35,7 +35,7 @@ namespace PMonitor.Test
         public void TheConstructorShouldInstantiateMonitorCorrectly()
         {
             //Act
-            var pMonitor = new WindowsProcessMonitor();
+            AbstractProcessMonitor pMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
 
             //Assert
             Assert.AreEqual(2, pMonitor.NbOfProcesses, "NbOfProcesses assertion is wrong");
@@ -56,7 +56,7 @@ namespace PMonitor.Test
             Process demoProcess1 = Process.Start(_process1FilePath);
 
             //Act
-            var pMonitor = new WindowsProcessMonitor();
+            AbstractProcessMonitor pMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
             pMonitor.RefreshInformation();
 
             //Assert
@@ -79,7 +79,7 @@ namespace PMonitor.Test
             Process demoProcess1 = Process.Start(_process1FilePath);
 
             //Act
-            var pMonitor = new WindowsProcessMonitor();
+            AbstractProcessMonitor pMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
             pMonitor.RefreshInformation();
 
             //Assert

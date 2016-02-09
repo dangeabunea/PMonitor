@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMonitor.Test", "PMonitor.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMonitor.DemoProcess1", "PMonitor.DemoProcess1\PMonitor.DemoProcess1.csproj", "{976EA3EB-7773-40D4-8525-627C1FD6350C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMonitor.Example.Console", "PMonitor.Example.Console\PMonitor.Example.Console.csproj", "{ECDE96AD-1C46-4868-8186-DC5C2A0B5DB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{976EA3EB-7773-40D4-8525-627C1FD6350C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{976EA3EB-7773-40D4-8525-627C1FD6350C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{976EA3EB-7773-40D4-8525-627C1FD6350C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECDE96AD-1C46-4868-8186-DC5C2A0B5DB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECDE96AD-1C46-4868-8186-DC5C2A0B5DB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECDE96AD-1C46-4868-8186-DC5C2A0B5DB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECDE96AD-1C46-4868-8186-DC5C2A0B5DB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
