@@ -15,7 +15,8 @@ namespace PMonitor.Core.Linux
     {
         private readonly Process _process;
 
-        public int Id {
+        public int Id
+        {
             get
             {
                 if (_process != null)
@@ -49,8 +50,7 @@ namespace PMonitor.Core.Linux
             }
         }
 
-
-        private LinuxProcess(int pid)
+        private LinuxProcess(int pid, string processName)
         {
             _process = Process.GetProcessById(pid);
 
@@ -58,6 +58,8 @@ namespace PMonitor.Core.Linux
             {
                 Console.WriteLine("Could not find process by PID " + pid);
             }
+
+            ProcessName = processName;
         }
 
         private LinuxProcess(Process process)
@@ -106,41 +108,54 @@ namespace PMonitor.Core.Linux
                 {
                     continue;
                 }
-                
+
                 //Parse the process status file in order to get the filename of that lanched the process. If no stat
                 //file is present, than we skip and continue with the next directory
-                UnixProcessStatusFile processStatusFile = ParseUnixProcessStatusFile(pid);
+                LinuxProcessStatusFile processStatusFile = ParseLinuxProcessStatusFile(pid);
                 if (processStatusFile == null)
                 {
                     continue;
                 }
 
-                LinuxProcess linuxProcess = BuildUnixProcess(processStatusFile);
+                //Build Linux process and add it to our result set
+                LinuxProcess linuxProcess = BuildProcess(processStatusFile);
                 processList.Add(linuxProcess);
             }
 
             return processList.ToArray();
         }
 
-        private static LinuxProcess BuildUnixProcess(UnixProcessStatusFile processStatusFile)
+        private static LinuxProcess BuildProcess(LinuxProcessStatusFile processStatusFile)
         {
-            LinuxProcess linuxProcess = new LinuxProcess(processStatusFile.Pid);
+            string processName = GetProcessName(processStatusFile);
+            LinuxProcess linuxProcess = new LinuxProcess(processStatusFile.Pid, processName);
+            return linuxProcess;
+        }
 
+        private static string GetProcessName(LinuxProcessStatusFile processStatusFile)
+        {
             //We verify if the process is a mono app. They are present in the stat file if the (mono) text is there. If
             //this is the case, then we gho deeper and anlyze the cmdline file in order to get the arguments to the mono command.
             //Those will tell us what was the .exe applicaiton that was executed.
             if (processStatusFile.FileName == "(mono)")
             {
-                var cmdline = ParseUnixProcessCommandLineFile(processStatusFile.Pid);
+                // We can find the command line text, including arguments for each process. We find it in /proc/{pid}/cmdline. It is here where we
+                // can seacrh for the name of the .exe file that was executed under Mono, as it is an argument for the mono command used to execute
+                // our .NET code under Mono
+                IList<string> cmdLineArgs;
+                const string CMDLINE_PATTERN = "/proc/{0}/cmdline";
+                using (var fileReader = File.OpenText(string.Format(CMDLINE_PATTERN, processStatusFile.Pid)))
+                {
+                    string contents = fileReader.ReadToEnd();
+                    cmdLineArgs = contents.Split(new[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
+                }
+
                 //the first element is the mono command
                 //the second element is the program we executed (.exe)
-                linuxProcess.ProcessName = Path.GetFileName(cmdline[1]);
+                return Path.GetFileName(cmdLineArgs.ElementAt(1));
             }
-            else
-            {
-                linuxProcess.ProcessName = processStatusFile.FileName.Trim('(', ')');
-            }
-            return linuxProcess;
+            //normal process, we just trim the paranthesis
+            return processStatusFile.FileName.Trim('(', ')');
         }
 
         public static LinuxProcess[] GetProcessesByName(string processName)
@@ -158,7 +173,7 @@ namespace PMonitor.Core.Linux
         /// </summary>
         /// <param name="pid"></param>
         /// <returns>The parsed result after reading the file</returns>
-        private static UnixProcessStatusFile ParseUnixProcessStatusFile(int pid)
+        private static LinuxProcessStatusFile ParseLinuxProcessStatusFile(int pid)
         {
             const string STAT_PATH_PATTERN = "/proc/{0}/stat";
 
@@ -173,30 +188,12 @@ namespace PMonitor.Core.Linux
                 using (var fileReader = File.OpenText(statFilePath))
                 {
                     var line = fileReader.ReadToEnd();
-                    return new UnixProcessStatusFile(line);
+                    return new LinuxProcessStatusFile(line);
                 }
             }
             catch (Exception)
             {
                 return null;
-            }
-        }
-
-        /// <summary>
-        /// We can find the command line text, including arguments for each process. We find it in /proc/{pid}/cmdline. It is here where we
-        /// can seacrh for the name of the .exe file that was executed under Mono, as it is an argument for the mono command used to execute
-        /// our .NET code under Mono
-        /// </summary>
-        /// <param name="pid"></param>
-        /// <returns></returns>
-        private static string[] ParseUnixProcessCommandLineFile(int pid)
-        {
-            const string CMDLINE_PATTERN = "/proc/{0}/cmdline";
-            using (var fileReader = File.OpenText(string.Format(CMDLINE_PATTERN, pid)))
-            {
-                string contents = fileReader.ReadToEnd();
-                var cmdLineArguments = contents.Split(new[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
-                return cmdLineArguments;
             }
         }
     }
