@@ -2,16 +2,20 @@
 
 PMonitor is a .NET process monitoring library focused on simplicity and ease of use. 
 
-## Use cases:
+## When would I use this library?
 
 Do you need to know the status of various processes running on your machine? Do you need to display the status of various processes to the user in a console or web application? Do you need to notify users when some critical process is not running? If you answer yes to any of the questions above, then this library is for you. 
 
-## Highlights:
+## What are the highlights?
 -	Compatibility with Linux. You can deploy the application on a Linux machine where it will run under the Mono framework.
 -	Ease of use. You do not need to write more than a couple of lines of code.
 -	Flexibility. You can change the default behavior of the built in monitors.
 
-## Show me some code:
+## How can I install the library?
+
+To be added...
+
+## Can you show me some code examples?
 
 ### 1. A simple console application 
 
@@ -275,8 +279,65 @@ The Angular controller
 
 If you do not fancy the idea of reading the names of the processes from the application configuration file, then you can change this behaviour. And it will only take you 5 minutes. All you need to do is create a new class that will inherit from WindowsProcessMonitor or LinuxProcessMonitor and override the ReadProcessNamesThatNeedToBeMonitored() method. 
 
-For example, let us say that we want to input those names programatically, and not depend on any file. 
+For example, let us say that we want to input those names programatically, and not depend on any file. We are only interested in the Notepad process.
+
+The custom process monitor implementation 
 
 ```c#
+using PMonitor.Core;
+using PMonitor.Core.Windows;
 
+namespace PMonitor.Example.CustomImpl
+{
+    //This class will get the name and firendly name of the Notepad process 
+    //programatically. There is no need to have an App.config file like in the 
+    //standard implementation. Of course, you can read the monitored processes
+    //however you like.
+    public class NoFileConfigProcessMonitor : WindowsProcessMonitor
+    {
+        protected override void ReadProcessNamesThatNeedToBeMonitored()
+        {
+            BasicProcessList.Add(new BasicProcessInformation("notepad","Notepad"));
+        }
+    }
+}
 ```
+
+The Main class
+
+```c#
+using System.Threading;
+using PMonitor.Core;
+
+namespace PMonitor.Example.CustomImpl
+{
+    class Program
+    {
+        static void Main()
+        {
+            System.Console.WriteLine("PMonitor Example - Console with custom process monitor impl");
+
+            //We can not use the factory to create our process monitor, bacause the factory only
+            //returns the built in implementaitons. However, we can just new-up our
+            //concrete instance.
+            AbstractProcessMonitor pm = new NoFileConfigProcessMonitor();
+            while (true)
+            {
+                pm.RefreshInformation();
+                BasicProcessInformation bpi = pm.GetProcessInformation().Single();
+
+                System.Console.WriteLine("{0} Process {1} is {2}", DateTime.Now.ToString(CultureInfo.InvariantCulture), bpi.FriendlyName, bpi.State.ToString());
+
+                Thread.Sleep(3000);
+            }
+        }
+    }
+}
+```
+
+## Can I download the complete examples?
+
+Sure! Just download the project and check them out. Each example is placed in its own project:
+- PMonitor.Example.Console
+- PMonitor.Example.Web
+- PMonitor.Example.CustomImpl
