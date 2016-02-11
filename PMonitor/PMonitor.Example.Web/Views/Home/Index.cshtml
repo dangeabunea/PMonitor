@@ -1,0 +1,46 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "PMonitor Example";
+}
+
+<html ng-app="app">
+<head>
+    <link href="~/Content/bootstrap-3.3.6-dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/appModule.js"></script>
+    <script src="~/Scripts/homeController.js"></script>
+</head>
+<body ng-controller="HomeController as vm">
+    <div class="container">
+        <h2>Status of monitored processes</h2>
+        <div class="starter-template">
+            <p class="lead">Refreshing in {{vm.remainingTimeBeforeRefresh}}</p>
+            <br/>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Process Id</th>
+                        <th>Name</th>
+                        <th>Friendly Name</th>
+                        <th>Uptime (sec)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="process in vm.monitoredProcesses">
+                <tr ng-class="vm.rowClass(process)">
+                    <td style="width: 180px;">{{process.Pid}}</td>
+                    <td>{{process.ProcessName}}</td>
+                    <td>{{process.FriendlyName}}</td>
+                    <td>{{process.UptimeInSeconds}} sec</td>
+                    <td>{{process.State === 0 ? "Running" : "Not Runing"}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

@@ -44,7 +44,7 @@ namespace PMonitor.Core
             //if process can not be found, re-initialize all members of the process information object
             if (process == null)
             {
-                Pid = default(int); ;
+                Pid = default(int);
                 StartDateTime = default(DateTime);
                 MemoryUsageMb = default(int);
                 UptimeInSeconds = default(int);
