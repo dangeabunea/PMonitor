@@ -1,21 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using PMonitor.Core;
 
-namespace PMonitor.Example.Console
+namespace PMonitor.Example.CustomImpl
 {
     class Program
     {
-        /// <summary>
-        /// On Windows, interrogate the status of the Notepad process every 3 seconds. You can open and close
-        /// Notepad in order to see how the program responds to your changes. We print the output on the console.
-        /// </summary>
         static void Main()
         {
-            System.Console.WriteLine("PMonitor Example - Console");
-            AbstractProcessMonitor pm = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
+            System.Console.WriteLine("PMonitor Example - Console with custom process monitor impl");
+
+            //We can not use the factory to create our process monitor, bacause the factory only
+            //returns the built in implementaitons. However, we can just new-up our
+            //concrete instance.
+            AbstractProcessMonitor pm = new NoFileConfigProcessMonitor();
             while (true)
             {
                 pm.RefreshInformation();

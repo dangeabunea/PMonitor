@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMonitor.Example.Console", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMonitor.Example.Web", "PMonitor.Example.Web\PMonitor.Example.Web.csproj", "{6F33C8AB-E050-4FC1-93FF-FD884AC46D3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMonitor.Example.CustomImpl", "PMonitor.Example.CustomImpl\PMonitor.Example.CustomImpl.csproj", "{4973B1C2-C61D-4418-B7B4-24C47FFDB98C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{6F33C8AB-E050-4FC1-93FF-FD884AC46D3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F33C8AB-E050-4FC1-93FF-FD884AC46D3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F33C8AB-E050-4FC1-93FF-FD884AC46D3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4973B1C2-C61D-4418-B7B4-24C47FFDB98C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4973B1C2-C61D-4418-B7B4-24C47FFDB98C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4973B1C2-C61D-4418-B7B4-24C47FFDB98C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4973B1C2-C61D-4418-B7B4-24C47FFDB98C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
