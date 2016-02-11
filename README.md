@@ -273,9 +273,10 @@ The Angular controller
 ```
 ### 3. I want to read the names of the processes I want to monitor from a different source than the configuration file
 
-If you do not fancy the idea of reading the names of the processes from the application configuration file, then you can change this behaviour. And it will only take you 5 minutes. All you need to do is create a new class that will inherit from AbstractProcessMonitor and override the RefreshInformation() method. 
+If you do not fancy the idea of reading the names of the processes from the application configuration file, then you can change this behaviour. And it will only take you 5 minutes. All you need to do is create a new class that will inherit from WindowsProcessMonitor or LinuxProcessMonitor and override the ReadProcessNamesThatNeedToBeMonitored() method. 
 
 For example, let us say that we want to input those names programatically, and not depend on any file. 
 
 ```c#
+
 ```
