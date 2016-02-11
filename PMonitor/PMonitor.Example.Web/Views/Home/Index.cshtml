@@ -17,6 +17,7 @@
         <div class="starter-template">
             <p class="lead">Refreshing in {{vm.remainingTimeBeforeRefresh}}</p>
             <br/>
+            <!-- The table will display the process information -->
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -29,7 +30,7 @@
                 </thead>
                 <tbody ng-repeat="process in vm.monitoredProcesses">
                 <tr ng-class="vm.rowClass(process)">
-                    <td style="width: 180px;">{{process.Pid}}</td>
+                    <td>{{process.Pid}}</td>
                     <td>{{process.ProcessName}}</td>
                     <td>{{process.FriendlyName}}</td>
                     <td>{{process.UptimeInSeconds}} sec</td>

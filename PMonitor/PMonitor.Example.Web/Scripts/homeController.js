@@ -13,6 +13,7 @@
 
         vm.remainingTimeBeforeRefresh = REFRESH_TIME;
 
+        //We store the monitored processes in this array
         vm.monitoredProcesses = [];
 
         vm.rowClass = function (process)
@@ -25,6 +26,7 @@
 
         refresh();
 
+        //Make a request to the server and retrieve the current status of the processes
         function refresh() {
             $interval(function () {
                 //each second, we update the remaining time before the call to the server

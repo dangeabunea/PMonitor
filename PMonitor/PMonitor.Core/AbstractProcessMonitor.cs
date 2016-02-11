@@ -33,6 +33,7 @@ namespace PMonitor.Core
         {
             BasicProcessList = new ConcurrentBag<BasicProcessInformation>();
             ReadProcessNamesThatNeedToBeMonitored();
+            RefreshInformation();
         }
 
         /// <summary>
