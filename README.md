@@ -64,7 +64,7 @@ namespace PMonitor.Example.Console
 }
 ```
 
-But how does the application know to monitor the Notepad process. From the configuration file. That is the place where we need to define the processes that we want to monitor.
+But how does the application know to monitor the Notepad process? From the configuration file. That is the place where we need to define the processes that we want to monitor.
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -74,9 +74,8 @@ But how does the application know to monitor the Notepad process. From the confi
     <add key="PMonitorNbOfProcesses" value="1"/>
     
     <!-- 
-    The name and friendly name of the process you want to monitor separated by comma. You can Choose the process name 
-    from the windows task manager. In this example, I will chose notepad. In windows, the process name is found without
-    adding the .exe extension.
+    The names and friendly names of the processes you want to monitor separated by comma. You can choose the process name 
+    from the windows task manager. In this example, I will chose notepad. In windows, the process name does not contain the .exe          extension.
     - notepad is the process name
     - Notepad is the friendly name
     -->
@@ -87,7 +86,7 @@ But how does the application know to monitor the Notepad process. From the confi
 
 Please note the conventions that are in place.
 - We use PMonitorNbOfProcesses key to tell the library how many process we want to monitor
-- We use many PMonitorProcessX keys to define the names and friendly names for our proceses. X is the number of the process (1,2,3,etc) 
+- We use many PMonitorProcessX keys to define the names and friendly names for our proceses. X is the number of the process (1,2,3, etc.) 
 For example, if we want to monitor 2 processes, we can change the configuration file like this:
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -104,7 +103,7 @@ For example, if we want to monitor 2 processes, we can change the configuration 
 
 ### 2. A simple web application 
 
-We shall build the application using ASPNET MVC and AngularJS. It will monitor 3 processes: Notepad, Wordpad and Paint. Every five secods, the applicaiton will refresh the HTML page with the current state of the processes.
+We shall build the application using ASPNET MVC and AngularJS. It will monitor 3 processes: Notepad, Wordpad and Paint. Every five seconds, the application will refresh the HTML page with the current state of the processes.
 
 The MVC Controller
 
@@ -197,9 +196,9 @@ The Web.config
     <add key="PMonitorNbOfProcesses" value="3"/>
 
     <!-- 
-    The name and friendly name of the process you want to monitor separated by comma. You can Choose the process name 
-    from the windows task manager. In this example, I will chose notepad, wordpad and paint. In windows, the process name is found         without
-    adding the .exe extension.
+    The names and friendly names of the processes you want to monitor separated by comma. You can choose the process name 
+    from the windows task manager. In this example, I will chose notepad, wordpad and paint. In windows, the process names do not
+    contain .exe extension.
     -->
     <add key="PMonitorProcess1" value="notepad,Notepad"/>
     <add key="PMonitorProcess2" value="wordpad,Wordpad"/>
@@ -277,7 +276,7 @@ The Angular controller
 ```
 ### 3. I want to read the names of the processes I want to monitor from a different source than the configuration file
 
-If you do not fancy the idea of reading the names of the processes from the application configuration file, then you can change this behaviour. And it will only take you 5 minutes. All you need to do is create a new class that will inherit from WindowsProcessMonitor or LinuxProcessMonitor and override the ReadProcessNamesThatNeedToBeMonitored() method. 
+If you do not fancy the idea of reading the names of the processes from the application configuration file, then you can change this behavior. And it will only take you five minutes. All you need to do is create a new class that will inherit from WindowsProcessMonitor or LinuxProcessMonitor and override the ReadProcessNamesThatNeedToBeMonitored() method. 
 
 For example, let us say that we want to input those names programatically, and not depend on any file. We are only interested in the Notepad process.
 
