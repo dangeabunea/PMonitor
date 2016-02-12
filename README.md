@@ -13,7 +13,9 @@ Do you need to know the status of various processes running on your machine? Do 
 
 ## How can I install the library?
 
-To be added...
+Very easy:) You can install this package from Nuget. See the link bellow.
+
+https://www.nuget.org/packages/PMonitor/
 
 ## Can you show me some code examples?
 
