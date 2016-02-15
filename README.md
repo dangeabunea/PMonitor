@@ -46,7 +46,7 @@ namespace PMonitor.Example.Console
             const int THREE_SECONDS = 3 * 1000;
 
             //we build an instance of a process monitor by using the ProcessMonitorFactory
-            AbstractProcessMonitor pm = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
+            IProcessMonitor pm = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
 
             while (true)
             {
@@ -128,7 +128,7 @@ namespace PMonitor.Example.Web.Controllers
         {
             //Instantiate and refresh information regarding the 3 processes (Notepad, Wordpad and Paint). The
             //information is taken from the Web.config file
-            AbstractProcessMonitor processMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
+            IProcessMonitor processMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
 
             IList<BasicProcessInformation> statusOfProcesses = processMonitor.GetProcessInformation();
 
@@ -321,7 +321,7 @@ namespace PMonitor.Example.CustomImpl
             //We can not use the factory to create our process monitor, bacause the factory only
             //returns the built in implementaitons. However, we can just new-up our
             //concrete instance.
-            AbstractProcessMonitor pm = new NoFileConfigProcessMonitor();
+            IProcessMonitor pm = new NoFileConfigProcessMonitor();
             while (true)
             {
                 pm.RefreshInformation();
