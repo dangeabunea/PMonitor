@@ -17,7 +17,7 @@ namespace PMonitor.Example.CustomImpl
             //We can not use the factory to create our process monitor, bacause the factory only
             //returns the built in implementaitons. However, we can just new-up our
             //concrete instance.
-            AbstractProcessMonitor pm = new NoFileConfigProcessMonitor();
+            IProcessMonitor pm = new NoFileConfigProcessMonitor();
             while (true)
             {
                 pm.RefreshInformation();

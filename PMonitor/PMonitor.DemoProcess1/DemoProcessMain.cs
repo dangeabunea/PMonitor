@@ -12,7 +12,7 @@ namespace PMonitor.DemoProcess1
         {
             Console.Title = "DemoProcess1";
             Console.WriteLine("Started demo process 1");
-            Thread.Sleep(5 * 1000);
+            Thread.Sleep(3 * 1000);
             Console.WriteLine("Stopped demo process 1");
         }
     }

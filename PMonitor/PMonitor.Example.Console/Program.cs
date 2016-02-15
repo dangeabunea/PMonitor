@@ -15,7 +15,7 @@ namespace PMonitor.Example.Console
         static void Main()
         {
             System.Console.WriteLine("PMonitor Example - Console");
-            AbstractProcessMonitor pm = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
+            IProcessMonitor pm = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
             while (true)
             {
                 pm.RefreshInformation();

@@ -16,7 +16,7 @@ namespace PMonitor.Example.Web.Controllers
         {
             //Instantiate and refresh information regarding the 3 processes (Notepad, Wordpad and Paint). The
             //information is taken from the Web.config file
-            AbstractProcessMonitor processMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
+            IProcessMonitor processMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
 
             IList<BasicProcessInformation> statusOfProcesses = processMonitor.GetProcessInformation();
 

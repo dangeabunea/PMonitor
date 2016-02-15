@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AbstractProcessMonitor.cs" />
     <Compile Include="BasicProcessInformation.cs" />
+    <Compile Include="IProcessMonitor.cs" />
     <Compile Include="ProcessMonitorFactory.cs" />
     <Compile Include="ProcessState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

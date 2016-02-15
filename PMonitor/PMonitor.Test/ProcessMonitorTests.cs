@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using PMonitor.Core;
-using PMonitor.Core.Windows;
 
 namespace PMonitor.Test
 {
@@ -35,7 +34,7 @@ namespace PMonitor.Test
         public void TheConstructorShouldInstantiateMonitorCorrectly()
         {
             //Act
-            AbstractProcessMonitor pMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
+            IProcessMonitor pMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
 
             //Assert
             Assert.AreEqual(2, pMonitor.NbOfProcesses, "NbOfProcesses assertion is wrong");
@@ -56,7 +55,7 @@ namespace PMonitor.Test
             Process demoProcess1 = Process.Start(_process1FilePath);
 
             //Act
-            AbstractProcessMonitor pMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
+            IProcessMonitor pMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
             pMonitor.RefreshInformation();
 
             //Assert
@@ -79,7 +78,7 @@ namespace PMonitor.Test
             Process demoProcess1 = Process.Start(_process1FilePath);
 
             //Act
-            AbstractProcessMonitor pMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
+            IProcessMonitor pMonitor = ProcessMonitorFactory.BuildDefaultOSProcessMonitor();
             pMonitor.RefreshInformation();
 
             //Assert

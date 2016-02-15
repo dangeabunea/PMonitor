@@ -9,7 +9,7 @@ namespace PMonitor.Core
     /// <summary>
     /// The basic class for all instances of process monitors
     /// </summary>
-    public abstract class AbstractProcessMonitor
+    public abstract class AbstractProcessMonitor : IProcessMonitor
     {
         //We make the collection concurrent inc ase refreshes and reads are performed from multiple threads
         protected ConcurrentBag<BasicProcessInformation> BasicProcessList { get; }
