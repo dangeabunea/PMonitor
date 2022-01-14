@@ -13,16 +13,9 @@ namespace PMonitor.Core.Linux
 
         public LinuxProcessStatusFile(string text)
         {
-            try
-            {
-                string[] textPart = text.Split(' ');
-                Pid = Convert.ToInt16(textPart[0]);
-                FileName = textPart[1];
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Could not parse line" + ex.Message);
-            }
+            string[] textPart = text.Split(' ');
+            Pid = Convert.ToInt32(textPart[0]);
+            FileName = textPart[1];
         }
     }
 }

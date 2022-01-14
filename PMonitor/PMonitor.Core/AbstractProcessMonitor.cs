@@ -58,7 +58,7 @@ namespace PMonitor.Core
 
             try
             {
-                int nbProcessesToMonitor = Int32.Parse(ConfigurationManager.AppSettings[NB_KEY]);
+                Int32.TryParse(ConfigurationManager.AppSettings[NB_KEY], out int nbProcessesToMonitor);
                 for (int i = 1; i <= nbProcessesToMonitor; i++)
                 {
                     string processName =
