@@ -19,9 +19,10 @@ namespace PMonitor.Example.Console
             while (true)
             {
                 pm.RefreshInformation();
-                BasicProcessInformation bpi = pm.GetProcessInformation().Single();
-
-                System.Console.WriteLine("{0} Process {1} is {2}", DateTime.Now.ToString(CultureInfo.InvariantCulture), bpi.FriendlyName, bpi.State.ToString());
+                foreach (var bpi in pm.GetProcessInformation())
+                {
+                    System.Console.WriteLine("{0} Process {1} is {2}", DateTime.Now.ToString(CultureInfo.InvariantCulture), bpi.FriendlyName, bpi.State.ToString());
+                }
 
                 Thread.Sleep(3000);
             }

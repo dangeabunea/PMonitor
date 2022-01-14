@@ -187,8 +187,16 @@ namespace PMonitor.Core.Linux
 
                 using (var fileReader = File.OpenText(statFilePath))
                 {
-                    var line = fileReader.ReadToEnd();
-                    return new LinuxProcessStatusFile(line);
+                    try
+                    {
+                        var line = fileReader.ReadToEnd();
+                        return new LinuxProcessStatusFile(line);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(String.Format("Could not parse line for PID {0} because \"{1}\".", pid, ex.Message));
+                        return null;
+                    }
                 }
             }
             catch (Exception)
